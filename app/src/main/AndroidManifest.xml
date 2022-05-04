@@ -3,21 +3,51 @@
     package="com.example.luodong_river">
 
     <application
+        android:name=".GlobalVariable"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Luodong_River">
+        android:theme="@style/NoActionBar">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".Game7"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Game6"
+            android:exported="false" />
+        <activity
+            android:name=".Game5"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".Game4"
+            android:exported="false" />
+        <activity
+            android:name=".Game3"
+            android:exported="false" />
+        <activity
+            android:name=".Game2"
+            android:exported="true" />
+        <activity
+            android:name=".Game1"
+            android:exported="true" />
+        <activity
+            android:name=".GameRules"
+            android:exported="false" />
+        <activity
+            android:name=".DeveloperMode"
+            android:exported="false" />
+        <activity
+            android:name=".Title"
+            android:exported="true" />
     </application>
 
 </manifest>
