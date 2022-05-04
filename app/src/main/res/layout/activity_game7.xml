@@ -10,27 +10,63 @@
         android:id="@+id/button_G7go"
         android:layout_width="160dp"
         android:layout_height="64dp"
-        android:layout_marginBottom="16dp"
         android:background="@drawable/button_go"
         android:contentDescription="@string/button_go"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView_G7ch"
-        app:layout_constraintStart_toStartOf="@+id/imageView_G7ch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_G7ch" />
 
     <ImageView
         android:id="@+id/imageView_G7ch"
         android:layout_width="wrap_content"
         android:layout_height="300dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:src="@drawable/game7ch"
         app:layout_constraintBottom_toTopOf="@+id/button_G7go"
+        app:layout_constraintEnd_toEndOf="@+id/button_G7go"
+        app:layout_constraintStart_toStartOf="@+id/button_G7go"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/game7ch2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="0"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="兌換方式\n請至羅東溪遊客服務中心進行兌換\n\n小於１０分\n可轉動輪盤，最多轉四次\n\n大於等於１０分\n請至服務中心兌換現場商品商品及折價劵"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_G7ch"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_G7ch"
+        app:layout_constraintStart_toStartOf="@+id/imageView_G7ch"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

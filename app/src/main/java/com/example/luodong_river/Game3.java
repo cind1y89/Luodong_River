@@ -16,6 +16,7 @@ public class Game3 extends GlobalCode {
     TextView textView_text;
     int i=0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

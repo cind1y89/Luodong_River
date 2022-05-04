@@ -90,8 +90,7 @@ public class Game4 extends AppCompatActivity {
             "鴨母寮裡面住的是男生還是女生呢?",
             "豬哥窟裡面住的是男生還是女生呢?",
             "稻草搭成的簡易房子叫甚麼呢?"};
-    // TODO: 2022/5/4 題目答案?
-    int[] answer={1,2,3,4,1,1};
+    int[] answer={4,1,4,3,2,3};
     int index=0;
     // TODO: 2022/5/4 題目圖片?
     private void game() {

@@ -85,8 +85,8 @@ public class Game5 extends GlobalCode {
         imageView_ch.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
 
-        // 60秒倒數
-        new CountDownTimer(60000, 1000) {
+        // 30秒倒數
+        new CountDownTimer(30000, 1000) {
             public void onTick(long millisUntilFinished) {
                 textView_timer.setText(""+millisUntilFinished / 1000);
             }

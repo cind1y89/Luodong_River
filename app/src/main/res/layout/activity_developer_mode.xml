@@ -15,7 +15,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/button_go"
         android:contentDescription="@string/button_go"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,4 +23,97 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView_d1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="羅東溪休閒農業區旅遊服務中心"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView_d2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/textView_d2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="隨緣蓮花休閒農場"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView_d3"
+        app:layout_constraintEnd_toEndOf="@+id/textView_d1"
+        app:layout_constraintStart_toStartOf="@+id/textView_d1"
+        app:layout_constraintTop_toBottomOf="@+id/textView_d1" />
+
+    <TextView
+        android:id="@+id/textView_d3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="牛車俥蜜餞文化村"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView_d4"
+        app:layout_constraintEnd_toEndOf="@+id/textView_d2"
+        app:layout_constraintStart_toStartOf="@+id/textView_d2"
+        app:layout_constraintTop_toBottomOf="@+id/textView_d2" />
+
+    <TextView
+        android:id="@+id/textView_d4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="宜農牧場"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView_d5"
+        app:layout_constraintEnd_toEndOf="@+id/textView_d3"
+        app:layout_constraintStart_toStartOf="@+id/textView_d3"
+        app:layout_constraintTop_toBottomOf="@+id/textView_d3" />
+
+    <TextView
+        android:id="@+id/textView_d5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="廣興農場 鴨母寮豬哥窟"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView_d6"
+        app:layout_constraintEnd_toEndOf="@+id/textView_d4"
+        app:layout_constraintStart_toStartOf="@+id/textView_d4"
+        app:layout_constraintTop_toBottomOf="@+id/textView_d4" />
+
+    <TextView
+        android:id="@+id/textView_d6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="水岸森林休閒農場"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView_d7"
+        app:layout_constraintEnd_toEndOf="@+id/textView_d5"
+        app:layout_constraintStart_toStartOf="@+id/textView_d5"
+        app:layout_constraintTop_toBottomOf="@+id/textView_d5" />
+
+    <TextView
+        android:id="@+id/textView_d7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="綠能農場"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textView_d6"
+        app:layout_constraintStart_toStartOf="@+id/textView_d6"
+        app:layout_constraintTop_toBottomOf="@+id/textView_d6" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.example.luodong_river;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,7 @@ public class Game2 extends GlobalCode {
     TextView textView_text,textView_timer,textView_q;
     ImageView imageView_q,imageView_a1,imageView_a2,imageView_a3;
     int i=0;
+    int time=100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,15 +134,30 @@ public class Game2 extends GlobalCode {
                             if(view==imageView_a1){
                                 view.setVisibility(View.GONE);
                                 Log.d("Test","yes");
-                                Toast.makeText(Game2.this,"恭喜，你答對了",Toast.LENGTH_SHORT).show();
+
+                                Toast toast =Toast.makeText(Game2.this,"恭喜，你答對了",Toast.LENGTH_SHORT);
+                                toast.show();
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        toast.cancel();
+                                    }
+                                }, 500);
 
                             }else{
                                 view.setVisibility(View.GONE);
                                 Log.d("Test","no");
-                                Toast.makeText(Game2.this,"燈等，再注意看看",Toast.LENGTH_SHORT).show();
+                                Toast toast =Toast.makeText(Game2.this,"燈等，再注意看看",Toast.LENGTH_SHORT);
+                                toast.show();
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        toast.cancel();
+                                    }
+                                }, 500);
                             }
-
-
                         }
                     }
                     break;
