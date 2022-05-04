@@ -37,7 +37,7 @@ public class Game6 extends GlobalCode {
                 }else if(i==1){
                     i++;
                     layout.setBackgroundResource(R.drawable.game6b3);
-                    button_go.setVisibility(View.GONE);
+//                    button_go.setVisibility(View.GONE);
 
                     // 3sec預備倒數
                     textView_text.setVisibility(View.VISIBLE);
@@ -51,7 +51,7 @@ public class Game6 extends GlobalCode {
                         }
                         public void onFinish() {
                             game();
-//                            textView_text.setVisibility(View.GONE);
+                            textView_text.setVisibility(View.GONE);
                         }
                     }.start();
                 }else{
