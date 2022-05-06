@@ -1,5 +1,6 @@
 package com.example.luodong_river;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -18,11 +19,30 @@ public class Game7 extends GlobalCode {
     Button button_go;
     ImageView imageView_ch;
     TextView textView_point;
+    ImageView imageView_menu;
+    GlobalVariable globalVariable_mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game7);
+
+        //開發者模式菜單
+        imageView_menu=findViewById(R.id.imageView_menu);
+        globalVariable_mode= (GlobalVariable) getApplicationContext();
+        if(globalVariable_mode.getMode().equals("developer")){
+            imageView_menu.setVisibility(View.VISIBLE);
+        }else{
+            imageView_menu.setVisibility(View.GONE);
+        }
+        imageView_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(Game7.this,DeveloperMode.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         button_go=findViewById(R.id.button_G7go);
         imageView_ch=findViewById(R.id.imageView_G7ch);

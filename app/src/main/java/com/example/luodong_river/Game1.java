@@ -14,12 +14,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Random;
+
 public class Game1 extends GlobalCode {
 
     Button button_go;
     View layout;
     TextView textView_score,textView_timer,textView_text;
-    ImageView imageView_ch,imageView_d1,imageView_d2,imageView_d3,imageView_d4,imageView_d5;
+    ImageView imageView_ch,imageView_d1,imageView_d2,imageView_d3,imageView_d4,imageView_d5,imageView_menu;
+    GlobalVariable globalVariable_mode;
     int i=0;
     int screenWidth=0;
     float screen_x=0;
@@ -41,7 +44,23 @@ public class Game1 extends GlobalCode {
         imageView_d3=findViewById(R.id.imageView_d3);
         imageView_d4=findViewById(R.id.imageView_d4);
         imageView_d5=findViewById(R.id.imageView_d5);
-        // TODO: 2022/5/3 花花圖片背景
+
+        //開發者模式菜單
+        imageView_menu=findViewById(R.id.imageView_menu);
+        globalVariable_mode= (GlobalVariable) getApplicationContext();
+        if(globalVariable_mode.getMode().equals("developer")){
+            imageView_menu.setVisibility(View.VISIBLE);
+        }else{
+            imageView_menu.setVisibility(View.GONE);
+        }
+        imageView_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(Game1.this,DeveloperMode.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
         //screen monitor
@@ -89,10 +108,31 @@ public class Game1 extends GlobalCode {
         });
     }
 
+    int r = new Random().nextInt(3);
     private void game() {
         textView_score.setVisibility(View.VISIBLE);
         textView_timer.setVisibility(View.VISIBLE);
         imageView_ch.setVisibility(View.VISIBLE);
+
+        if(r==0){
+            imageView_d1.setImageResource(R.drawable.game1f1);
+            imageView_d2.setImageResource(R.drawable.game1f2);
+            imageView_d3.setImageResource(R.drawable.game1f5);
+            imageView_d4.setImageResource(R.drawable.game1f5);
+            imageView_d5.setImageResource(R.drawable.game1f4);
+        }else if(r==1){
+            imageView_d1.setImageResource(R.drawable.game1f5);
+            imageView_d2.setImageResource(R.drawable.game1f2);
+            imageView_d3.setImageResource(R.drawable.game1f5);
+            imageView_d4.setImageResource(R.drawable.game1f3);
+            imageView_d5.setImageResource(R.drawable.game1f1);
+        }else{
+            imageView_d1.setImageResource(R.drawable.game1f2);
+            imageView_d2.setImageResource(R.drawable.game1f5);
+            imageView_d3.setImageResource(R.drawable.game1f4);
+            imageView_d4.setImageResource(R.drawable.game1f3);
+            imageView_d5.setImageResource(R.drawable.game1f5);
+        }
 
 
         // 30秒倒數 與 掉落物
@@ -206,11 +246,68 @@ public class Game1 extends GlobalCode {
             x=false;
         }
 
-        if(x && y){
-            int s = Integer.parseInt(textView_score.getText().toString());
-            textView_score.setText(""+(s+3));
-            imageView.setVisibility(View.GONE);
+        if(r==0 ){
+            //3、4
+            if(imageView==imageView_d3 || imageView==imageView_d4){
+                if(x && y){
+                    int s = Integer.parseInt(textView_score.getText().toString());
+                    textView_score.setText(""+(s+3));
+                    imageView.setVisibility(View.GONE);
+                }
+            }else{
+                if(x && y){
+                    int s = Integer.parseInt(textView_score.getText().toString());
+                    if(s>=2){
+                        textView_score.setText(""+(s-2));
+                    }else{
+                        textView_score.setText("0");
+                    }
+
+                    imageView.setVisibility(View.GONE);
+                }
+            }
+        }else if(r==1){
+            //1、3
+            if(imageView==imageView_d1 || imageView==imageView_d3){
+                if(x && y){
+                    int s = Integer.parseInt(textView_score.getText().toString());
+                    textView_score.setText(""+(s+3));
+                    imageView.setVisibility(View.GONE);
+                }
+            }else{
+                if(x && y){
+                    int s = Integer.parseInt(textView_score.getText().toString());
+                    if(s>=3){
+                        textView_score.setText(""+(s-3));
+                    }else{
+                        textView_score.setText("0");
+                    }
+
+                    imageView.setVisibility(View.GONE);
+                }
+            }
+        }else {
+            //2、5
+            if(imageView==imageView_d2 || imageView==imageView_d5){
+                if(x && y){
+                    int s = Integer.parseInt(textView_score.getText().toString());
+                    textView_score.setText(""+(s+3));
+                    imageView.setVisibility(View.GONE);
+                }
+            }else{
+                if(x && y){
+                    int s = Integer.parseInt(textView_score.getText().toString());
+                    if(s>=3){
+                        textView_score.setText(""+(s-3));
+                    }else{
+                        textView_score.setText("0");
+                    }
+
+                    imageView.setVisibility(View.GONE);
+                }
+            }
         }
+
 
     }
 

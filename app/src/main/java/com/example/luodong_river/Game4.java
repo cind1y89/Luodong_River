@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,18 +37,37 @@ import static com.example.luodong_river.R.drawable.game4b8a2;
 import static com.example.luodong_river.R.drawable.game4b8a3;
 import static com.example.luodong_river.R.drawable.game4b8a4;
 
-public class Game4 extends AppCompatActivity {
+public class Game4 extends GlobalCode {
 
     Button button_go,button_a1,button_a2,button_a3,button_a4;
     View layout;
-    TextView textView_text,textView_q;
+    TextView textView_text,textView_q,textView_score;
     ImageView imageView_q;
+    ImageView imageView_menu;
+    GlobalVariable globalVariable_mode;
     int i=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game4);
+
+        //開發者模式菜單
+        imageView_menu=findViewById(R.id.imageView_menu);
+        globalVariable_mode= (GlobalVariable) getApplicationContext();
+        if(globalVariable_mode.getMode().equals("developer")){
+            imageView_menu.setVisibility(View.VISIBLE);
+        }else{
+            imageView_menu.setVisibility(View.GONE);
+        }
+        imageView_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(Game4.this,DeveloperMode.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         button_go=findViewById(R.id.button_G4go);
         button_a1=findViewById(R.id.button_a1);
@@ -58,6 +78,7 @@ public class Game4 extends AppCompatActivity {
         imageView_q=findViewById(R.id.imageView_G4q);
         textView_text=findViewById(R.id.textView_G4text);
         textView_q=findViewById(R.id.textView_G4q);
+        textView_score=findViewById(R.id.textView_G4score);
 
         button_go.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +113,6 @@ public class Game4 extends AppCompatActivity {
             "稻草搭成的簡易房子叫甚麼呢?"};
     int[] answer={4,1,4,3,2,3};
     int index=0;
-    // TODO: 2022/5/4 題目圖片?
     private void game() {
         Log.d("index",""+index);
         button_a1.setVisibility(View.VISIBLE);
@@ -101,11 +121,13 @@ public class Game4 extends AppCompatActivity {
         button_a4.setVisibility(View.VISIBLE);
         imageView_q.setVisibility(View.VISIBLE);
         textView_q.setVisibility(View.VISIBLE);
+        textView_score.setVisibility(View.VISIBLE);
+
 
         if(index==0){
             Log.d("index","0:"+index);
             textView_q.setText(question[index]);
-//            imageView_q.setImageDrawable();
+//          imageView_q.setImageResource(R.drawable.);
             button_a1.setBackgroundResource(game4b3a1);
             button_a2.setBackgroundResource(game4b3a2);
             button_a3.setBackgroundResource(game4b3a3);
@@ -113,8 +135,8 @@ public class Game4 extends AppCompatActivity {
             answer();
         }else if(index==1){
             Log.d("index","1:"+index);
+            imageView_q.setImageResource(R.drawable.game2q1a1);
             textView_q.setText(question[index]);
-//            imageView_q.setImageDrawable();
             button_a1.setBackgroundResource(game4b4a1);
             button_a2.setBackgroundResource(game4b4a2);
             button_a3.setBackgroundResource(game4b4a3);
@@ -123,7 +145,7 @@ public class Game4 extends AppCompatActivity {
         }else if(index==2){
             Log.d("index","2:"+index);
             textView_q.setText(question[index]);
-//            imageView_q.setImageDrawable();
+            imageView_q.setImageResource(R.drawable.game4q3);
             button_a1.setBackgroundResource(game4b5a1);
             button_a2.setBackgroundResource(game4b5a2);
             button_a3.setBackgroundResource(game4b5a3);
@@ -132,7 +154,7 @@ public class Game4 extends AppCompatActivity {
         }else if(index==3){
             Log.d("index","3:"+index);
             textView_q.setText(question[index]);
-//            imageView_q.setImageDrawable();
+//            imageView_q.setImageResource(R.drawable.);
             button_a1.setBackgroundResource(game4b6a1);
             button_a2.setBackgroundResource(game4b6a2);
             button_a3.setBackgroundResource(game4b6a3);
@@ -141,7 +163,7 @@ public class Game4 extends AppCompatActivity {
         }else if(index==4){
             Log.d("index","4:"+index);
             textView_q.setText(question[index]);
-//            imageView_q.setImageDrawable();
+            imageView_q.setImageResource(R.mipmap.game4q5);
             button_a1.setBackgroundResource(game4b7a1);
             button_a2.setBackgroundResource(game4b7a2);
             button_a3.setBackgroundResource(game4b7a3);
@@ -150,7 +172,7 @@ public class Game4 extends AppCompatActivity {
         }else if(index==5){
             Log.d("index","5:"+index);
             textView_q.setText(question[index]);
-//            imageView_q.setImageDrawable();
+//            imageView_q.setImageResource(R.drawable.);
             button_a1.setBackgroundResource(game4b8a1);
             button_a2.setBackgroundResource(game4b8a2);
             button_a3.setBackgroundResource(game4b8a3);
@@ -164,71 +186,90 @@ public class Game4 extends AppCompatActivity {
         Log.d("index","a:"+index);
         if(answer[index]==1){
             button_a1.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "恭喜，你答對了", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                right();
             });
             button_a2.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "燈等，不對喔", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                wrong();
             });
             button_a3.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "燈等，不對喔", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                wrong();
             });button_a4.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "燈等，不對喔", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                wrong();
             });
         }else if(answer[index]==2){
             button_a1.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "燈等，不對喔", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                wrong();
             });
             button_a2.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "恭喜，你答對了", Toast.LENGTH_SHORT).show();
-                indexCheck();
+               right();
             });
             button_a3.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "燈等，不對喔", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                wrong();
             });button_a4.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "燈等，不對喔", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                wrong();
             });
         }else if(answer[index]==3){
             button_a1.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "燈等，不對喔", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                wrong();
             });
             button_a2.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "燈等，不對喔", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                wrong();
             });
             button_a3.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "恭喜，你答對了", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                right();
             });button_a4.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "燈等，不對喔", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                wrong();
             });
         }else if(answer[index]==4){
             button_a1.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "燈等，不對喔", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                wrong();
             });
             button_a2.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "燈等，不對喔", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                wrong();
             });
             button_a3.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "燈等，不對喔", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                wrong();
             });button_a4.setOnClickListener(view -> {
-                Toast.makeText(Game4.this, "恭喜，你答對了", Toast.LENGTH_SHORT).show();
-                indexCheck();
+                right();
             });
         }
 
 
+    }
+
+    private void wrong() {
+        Toast toast =Toast.makeText(Game4.this, "燈等，不對喔", Toast.LENGTH_SHORT);
+        toast.show();
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast.cancel();
+            }
+        },1500);
+
+        int s = Integer.parseInt(textView_score.getText().toString());
+        if(s>=2){
+            textView_score.setText(""+(s-2));
+        }else{
+            textView_score.setText("0");
+        }
+        indexCheck();
+    }
+
+    private void right() {
+        Toast toast =Toast.makeText(Game4.this, "恭喜，你答對了", Toast.LENGTH_SHORT);
+        toast.show();
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast.cancel();
+            }
+        },1500);
+        int s = Integer.parseInt(textView_score.getText().toString());
+        textView_score.setText(""+(s+3));
+        indexCheck();
     }
 
     //題號檢測
@@ -238,6 +279,10 @@ public class Game4 extends AppCompatActivity {
             game();
         }else{
             button_go.setVisibility(View.VISIBLE);
+            textView_text.setVisibility(View.VISIBLE);
+            textView_text.setText("GAMEOVER");
+            textView_q.setVisibility(View.GONE);
+            imageView_q.setVisibility(View.GONE);
             button_a1.setVisibility(View.GONE);
             button_a2.setVisibility(View.GONE);
             button_a3.setVisibility(View.GONE);

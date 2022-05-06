@@ -23,12 +23,31 @@ public class Game5 extends GlobalCode {
     TextView textView_text,textView_timer;
     ImageView imageView_ch;
     ProgressBar progressBar;
+    ImageView imageView_menu;
+    GlobalVariable globalVariable_mode;
     int i=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game5);
+
+        //開發者模式菜單
+        imageView_menu=findViewById(R.id.imageView_menu);
+        globalVariable_mode= (GlobalVariable) getApplicationContext();
+        if(globalVariable_mode.getMode().equals("developer")){
+            imageView_menu.setVisibility(View.VISIBLE);
+        }else{
+            imageView_menu.setVisibility(View.GONE);
+        }
+        imageView_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(Game5.this,DeveloperMode.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         button_go=findViewById(R.id.button_G5go);
         layout=findViewById(R.id.layout_G5);

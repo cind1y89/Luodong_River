@@ -17,7 +17,8 @@ public class Game2 extends GlobalCode {
     Button button_go;
     View layout;
     TextView textView_text,textView_timer,textView_q;
-    ImageView imageView_q,imageView_a1,imageView_a2,imageView_a3;
+    ImageView imageView_q,imageView_a1,imageView_a2,imageView_a3,imageView_menu;
+    GlobalVariable globalVariable_mode;
     int i=0;
     int time=100;
 
@@ -25,6 +26,26 @@ public class Game2 extends GlobalCode {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game2);
+
+        //開發者模式菜單
+        imageView_menu=findViewById(R.id.imageView_menu);
+        globalVariable_mode= (GlobalVariable) getApplicationContext();
+        if(globalVariable_mode.getMode().equals("developer")){
+            imageView_menu.setVisibility(View.VISIBLE);
+        }else{
+            imageView_menu.setVisibility(View.GONE);
+        }
+        imageView_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(Game2.this,DeveloperMode.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+
 
         button_go=findViewById(R.id.button_G2go);
         layout=findViewById(R.id.layout_G2);
