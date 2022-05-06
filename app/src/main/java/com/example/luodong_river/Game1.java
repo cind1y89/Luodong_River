@@ -76,7 +76,7 @@ public class Game1 extends GlobalCode {
                 if(i==0){
                    i++;
                    layout.setBackgroundResource(R.drawable.game1b2);
-                   button_go.setBackgroundResource(R.drawable.button_start);
+                   button_go.setBackgroundResource(R.drawable.button_nextpage);
 
                 }else if(i==1){
                     i++;

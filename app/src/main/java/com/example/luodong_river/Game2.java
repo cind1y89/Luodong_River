@@ -16,7 +16,7 @@ public class Game2 extends GlobalCode {
 
     Button button_go;
     View layout;
-    TextView textView_text,textView_timer,textView_q;
+    TextView textView_text,textView_timer,textView_q,textView_s;
     ImageView imageView_q,imageView_a1,imageView_a2,imageView_a3,imageView_menu;
     GlobalVariable globalVariable_mode;
     int i=0;
@@ -56,6 +56,7 @@ public class Game2 extends GlobalCode {
         imageView_a1=findViewById(R.id.imageView_G2a1);
         imageView_a2=findViewById(R.id.imageView_G2a2);
         imageView_a3=findViewById(R.id.imageView_G2a3);
+        textView_s=findViewById(R.id.textView_G2score);
 
         //button
         button_go.setOnClickListener(new View.OnClickListener() {
@@ -96,15 +97,49 @@ public class Game2 extends GlobalCode {
         });
     }
 
+    String[] q={
+            "請問小豬豬吃甚麼?",
+            "請問小羊羊吃甚麼?",
+            "請問天竺鼠吃甚麼?",
+            "請問兔兔子吃甚麼?",
+            "請問大山羊吃甚麼?",
+            "請問大雞雞吃甚麼?",
+            "請問大鴨鴨吃甚麼?",
+            "請問大魚魚吃甚麼?"
+    };
+    int[] a={0,0,1,1,2,3,3,3};
+    int index=0;
+
     private void game() {
+        textView_text.setVisibility(View.GONE);
         textView_timer.setVisibility(View.VISIBLE);
+        textView_s.setVisibility(View.VISIBLE);
 
         // 30秒倒數
         new CountDownTimer(30000, 1000) {
             public void onTick(long millisUntilFinished) {
                 textView_timer.setText(""+millisUntilFinished / 1000);
+                if(index == 9){
+                    textView_q.setVisibility(View.GONE);
+                    imageView_q.setVisibility(View.GONE);
+                    imageView_a1.setVisibility(View.GONE);
+                    imageView_a2.setVisibility(View.GONE);
+                    imageView_a3.setVisibility(View.GONE);
+                    cancel();
+
+                    textView_timer.setText("0");
+                    textView_text.setVisibility(View.VISIBLE);
+                    textView_text.setText("Congratulate");
+                    // TODO: 2022/5/3 下一關按鈕背景
+                    button_go.setVisibility(View.VISIBLE);
+                }
             }
             public void onFinish() {
+                textView_q.setVisibility(View.GONE);
+                imageView_q.setVisibility(View.GONE);
+                imageView_a1.setVisibility(View.GONE);
+                imageView_a2.setVisibility(View.GONE);
+                imageView_a3.setVisibility(View.GONE);
                 textView_timer.setText("0");
                 textView_text.setVisibility(View.VISIBLE);
                 textView_text.setText("GAMEOVER");
@@ -113,9 +148,9 @@ public class Game2 extends GlobalCode {
             }
         }.start();
 
-        // TODO: 2022/5/4 題目切換
+
         textView_q.setVisibility(View.VISIBLE);
-        textView_q.setText("請問大山羊吃甚麼?");
+        textView_q.setText(q[index]);
 
         imageView_q.setVisibility(View.VISIBLE);
         imageView_a1.setVisibility(View.VISIBLE);
@@ -126,8 +161,12 @@ public class Game2 extends GlobalCode {
         imageView_a2.setOnTouchListener(touchListener);
         imageView_a3.setOnTouchListener(touchListener);
 
+        question();
+
     }
 
+    float initX1,initY1,initX2,initY2,initX3,initY3=0;
+    Boolean t=true;
     //圖片移動
     private View.OnTouchListener touchListener = new View.OnTouchListener() {
         private float x, y;  // 原本圖片存在的 X,Y軸位置
@@ -136,9 +175,35 @@ public class Game2 extends GlobalCode {
         @Override public boolean onTouch(View view, MotionEvent event) {
             switch (event.getAction() & MotionEvent.ACTION_MASK) {
                 case MotionEvent.ACTION_DOWN: {
+                    Log.d("Test","index "+index);
                     x = event.getX();                  //觸控的X軸位置
                     y = event.getY();                  //觸控的Y軸位置
                     image_pos(imageView_q);            //題目位置
+                    if(initX1==0&&initY1==0&&view==imageView_a1){
+                        initX1 = view.getX();
+                        initY1 = view.getY();
+//                        Log.d("Test","initX "+initX1);
+//                        Log.d("Test","initY "+initY1);
+                    }else if(initX2==0&&initY2==0&&view==imageView_a2){
+                        initX2 = view.getX();
+                        initY2 = view.getY();
+                    }else if(initX3==0&&initY3==0&&view==imageView_a3){
+                        initX3 = view.getX();
+                        initY3 = view.getY();
+                    }
+                    break;
+                }
+                case MotionEvent.ACTION_UP:{
+                    if(view==imageView_a1){
+                        view.setX(initX1);
+                        view.setY(initY1);
+                    }else if(view==imageView_a2){
+                        view.setX(initX2);
+                        view.setY(initY2);
+                    }else if(view==imageView_a3){
+                        view.setX(initX3);
+                        view.setY(initY3);
+                    }
                     break;
                 }
                 case MotionEvent.ACTION_MOVE: {
@@ -146,38 +211,35 @@ public class Game2 extends GlobalCode {
                     my = y-view.getY();
                     view.setX(event.getX()-mx);
                     view.setY(event.getY()-my);
-                    Log.d("Test","view.setX "+(event.getX()-mx));
-                    Log.d("Test","view.setY "+(event.getY()-my));
+//                    Log.d("Test","view.setX "+(event.getX()-mx));
+//                    Log.d("Test","view.setY "+(event.getY()-my));
+//                    Log.d("Test","posX "+((right-left)/2+left-100)+" "+(event.getX()-mx)+" "+((right-left)/2+left+100)+"");
+//                    Log.d("Test","posY "+((button-top)/2+top-100)+" "+(event.getY()-my)+" "+((button-top)/2+top-100)+"");
+                    if(((right-left)/3+left-100)<=(event.getX()-mx) && (event.getX()-mx)<=((right-left)/3+left+100)){
+                        if(((button-top)/3+top-100)<=(event.getY()-my) && (event.getY()-my)<=((button-top)/3+top+100)){
 
-                    if(((right-left)/4-100)<=(event.getX()-mx) && (event.getX()-mx)<=((right-left)/4+100)){
-                        if(((button-top)/3-100)<=(event.getY()-my) && (event.getY()-my)<=((button-top)/3+100)){
-                            // TODO: 2022/5/4 錯誤答案判定
-                            if(view==imageView_a1){
-                                view.setVisibility(View.GONE);
-                                Log.d("Test","yes");
 
-                                Toast toast =Toast.makeText(Game2.this,"恭喜，你答對了",Toast.LENGTH_SHORT);
-                                toast.show();
-                                Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        toast.cancel();
-                                    }
-                                }, 500);
-
-                            }else{
-                                view.setVisibility(View.GONE);
-                                Log.d("Test","no");
-                                Toast toast =Toast.makeText(Game2.this,"燈等，再注意看看",Toast.LENGTH_SHORT);
-                                toast.show();
-                                Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        toast.cancel();
-                                    }
-                                }, 500);
+                            if(index==1||index==2||index==5){
+                                if(view==imageView_a2&&t){
+                                    view.setVisibility(View.GONE);
+                                    question_right();
+                                }else{
+                                    question_wrong();
+                                }
+                            }else if(index==3||index==4){
+                                if(view==imageView_a1&&t){
+                                    view.setVisibility(View.GONE);
+                                    question_right();
+                                }else{
+                                    question_wrong();
+                                }
+                            }else if(index==6||index==7||index==8){
+                                if(view==imageView_a3&&t){
+                                    view.setVisibility(View.GONE);
+                                    question_right();
+                                }else{
+                                    question_wrong();
+                                }
                             }
                         }
                     }
@@ -187,6 +249,98 @@ public class Game2 extends GlobalCode {
             return true;
         }
     };
+
+    private void question_wrong() {
+        Toast toast =Toast.makeText(Game2.this,"燈等，再注意看看",Toast.LENGTH_SHORT);
+        toast.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast.cancel();
+            }
+        }, 500);
+    }
+
+    private void question_right() {
+        t=false;
+        imageView_a1.setVisibility(View.GONE);
+        imageView_a2.setVisibility(View.GONE);
+        imageView_a3.setVisibility(View.GONE);
+        Toast toast =Toast.makeText(Game2.this,"恭喜，你答對了",Toast.LENGTH_SHORT);
+        toast.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(index<8){
+                    question();
+                }else{
+                    index++;
+                }
+                toast.cancel();
+            }
+        }, 500);
+    }
+
+    // index
+    private void question() {
+        t=true;
+        imageView_a1.setVisibility(View.VISIBLE);
+        imageView_a2.setVisibility(View.VISIBLE);
+        imageView_a3.setVisibility(View.VISIBLE);
+
+        if(a[index]==0){
+            textView_q.setText(q[index]);
+            if(index==0){
+                imageView_q.setImageResource(R.mipmap.game4q5);
+                index++;
+            }else if(index ==1){
+                imageView_q.setImageResource(R.mipmap.game2q1);
+                index++;
+            }
+            imageView_a1.setImageResource(R.mipmap.game2a1);
+            imageView_a2.setImageResource(R.mipmap.game2a2);
+            imageView_a3.setImageResource(R.mipmap.game2a3);
+        }else if(a[index]==1){
+            textView_q.setText(q[index]);
+            if(index==2){
+                imageView_q.setImageResource(R.mipmap.game2q3);
+                index++;
+            }else if(index ==3){
+                imageView_q.setImageResource(R.mipmap.game2q4);
+                index++;
+            }
+            imageView_a1.setImageResource(R.mipmap.game2a1);
+            imageView_a2.setImageResource(R.mipmap.game2a2);
+            imageView_a3.setImageResource(R.drawable.game2q1a1);
+        }else if(a[index]==2){
+            textView_q.setText(q[index]);
+            if(index==4){
+                imageView_q.setImageResource(R.mipmap.game2q1);
+                index++;
+            }
+            imageView_a1.setImageResource(R.mipmap.game2a1);
+            imageView_a2.setImageResource(R.drawable.game2a8);
+            imageView_a3.setImageResource(R.drawable.game2q1a1);
+        }else if(a[index]==3){
+            textView_q.setText(q[index]);
+            if(index==5){
+                imageView_q.setImageResource(R.drawable.game1ch);
+                index++;
+            }else if(index ==6){
+                imageView_q.setImageResource(R.drawable.game1ch);
+                index++;
+            }else if(index ==7){
+                imageView_q.setImageResource(R.drawable.game1ch);
+                index++;
+            }
+            imageView_a1.setImageResource(R.mipmap.game2a1);
+            imageView_a2.setImageResource(R.drawable.game2q1a1);
+            imageView_a3.setImageResource(R.mipmap.game2a3);
+        }
+
+    }
 
     //題目位置
     int top,button,left,right;
