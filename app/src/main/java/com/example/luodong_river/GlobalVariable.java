@@ -4,14 +4,25 @@ import android.app.Application;
 
 public class GlobalVariable extends Application {
     private String mode="";
+    private int total;
 
-    //setting mode
-    public void setMode(String mode){
-        this.mode=mode;
-    }
-
-    //get mode
-    public String getMode(){
+    public String getMode() {
         return mode;
     }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+
+
+
 }

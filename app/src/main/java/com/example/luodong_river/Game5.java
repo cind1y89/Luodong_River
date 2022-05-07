@@ -20,11 +20,11 @@ public class Game5 extends GlobalCode {
 
     Button button_go,button_fish,button_ok;
     View layout;
-    TextView textView_text,textView_timer;
+    TextView textView_text,textView_timer,textView_score;
     ImageView imageView_ch;
     ProgressBar progressBar;
     ImageView imageView_menu;
-    GlobalVariable globalVariable_mode;
+    GlobalVariable globalVariable;
     int i=0;
 
     @Override
@@ -34,8 +34,8 @@ public class Game5 extends GlobalCode {
 
         //開發者模式菜單
         imageView_menu=findViewById(R.id.imageView_menu);
-        globalVariable_mode= (GlobalVariable) getApplicationContext();
-        if(globalVariable_mode.getMode().equals("developer")){
+        globalVariable= (GlobalVariable) getApplicationContext();
+        if(globalVariable.getMode().equals("developer")){
             imageView_menu.setVisibility(View.VISIBLE);
         }else{
             imageView_menu.setVisibility(View.GONE);
@@ -43,6 +43,8 @@ public class Game5 extends GlobalCode {
         imageView_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int t=globalVariable.getTotal();
+                globalVariable.setTotal(t+Integer.parseInt(textView_score.getText().toString()));
                 Intent intent =new Intent(Game5.this,DeveloperMode.class);
                 startActivity(intent);
                 finish();
@@ -57,6 +59,7 @@ public class Game5 extends GlobalCode {
         progressBar=findViewById(R.id.progressBar);
         button_ok=findViewById(R.id.button_G5ok);
         textView_timer=findViewById(R.id.textView_G5timer);
+        textView_score=findViewById(R.id.textView_G5score);
 
         button_go.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +90,8 @@ public class Game5 extends GlobalCode {
                         }
                     }.start();
                 }else{
-                    Intent intent = new Intent(Game5.this,Game6.class);
+                    int t=globalVariable.getTotal();
+                    globalVariable.setTotal(t+Integer.parseInt(textView_score.getText().toString()));                    Intent intent = new Intent(Game5.this,Game6.class);
                     startActivity(intent);
                     finish();
                 }
@@ -98,8 +102,10 @@ public class Game5 extends GlobalCode {
 
     }
 
+    boolean timeup=false;
     private void game() {
-
+        textView_timer.setVisibility(View.VISIBLE);
+        textView_score.setVisibility(View.VISIBLE);
         button_fish.setVisibility(View.VISIBLE);
         imageView_ch.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
@@ -110,12 +116,12 @@ public class Game5 extends GlobalCode {
                 textView_timer.setText(""+millisUntilFinished / 1000);
             }
             public void onFinish() {
+                timeup=true;
                 textView_timer.setText("0");
                 textView_text.setVisibility(View.VISIBLE);
                 textView_text.setText("GAMEOVER");
                 // TODO: 2022/5/3 下一關按鈕背景
                 button_go.setVisibility(View.VISIBLE);
-                button_fish.setVisibility(View.GONE);
             }
         }.start();
 
@@ -133,7 +139,7 @@ public class Game5 extends GlobalCode {
                     progressBar.setVisibility(View.GONE);
                     button_fish.setVisibility(View.GONE);
                     int r =  new Random().nextInt(4) ;
-                    // TODO: 2022/5/4 分數計算 ?
+
                     if(r==0){
                        layout.setBackgroundResource(R.drawable.game5f1);
                     }else if(r==1){
@@ -143,6 +149,9 @@ public class Game5 extends GlobalCode {
                     }else if(r==3){
                         layout.setBackgroundResource(R.drawable.game5f4);
                     }
+
+                    int s = Integer.parseInt(textView_score.getText().toString());
+                    textView_score.setText(""+(s+3));
                     button_ok.setVisibility(View.VISIBLE);
                 }
 
@@ -155,7 +164,9 @@ public class Game5 extends GlobalCode {
                 button_ok.setVisibility(View.GONE);
                 progressBar.setProgress(0);
                 layout.setBackgroundResource(R.drawable.game5b3);
-                button_fish.setVisibility(View.VISIBLE);
+                if(!timeup){
+                    button_fish.setVisibility(View.VISIBLE);
+                }
                 imageView_ch.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
             }

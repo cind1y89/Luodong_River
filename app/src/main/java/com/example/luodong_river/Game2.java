@@ -18,9 +18,8 @@ public class Game2 extends GlobalCode {
     View layout;
     TextView textView_text,textView_timer,textView_q,textView_s;
     ImageView imageView_q,imageView_a1,imageView_a2,imageView_a3,imageView_menu;
-    GlobalVariable globalVariable_mode;
+    GlobalVariable globalVariable;
     int i=0;
-    int time=100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +28,8 @@ public class Game2 extends GlobalCode {
 
         //開發者模式菜單
         imageView_menu=findViewById(R.id.imageView_menu);
-        globalVariable_mode= (GlobalVariable) getApplicationContext();
-        if(globalVariable_mode.getMode().equals("developer")){
+        globalVariable= (GlobalVariable) getApplicationContext();
+        if(globalVariable.getMode().equals("developer")){
             imageView_menu.setVisibility(View.VISIBLE);
         }else{
             imageView_menu.setVisibility(View.GONE);
@@ -38,6 +37,8 @@ public class Game2 extends GlobalCode {
         imageView_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int t=globalVariable.getTotal();
+                globalVariable.setTotal(t+Integer.parseInt(textView_s.getText().toString()));
                 Intent intent =new Intent(Game2.this,DeveloperMode.class);
                 startActivity(intent);
                 finish();
@@ -89,7 +90,8 @@ public class Game2 extends GlobalCode {
                         }
                     }.start();
                 }else{
-                    Intent intent = new Intent(Game2.this,Game3.class);
+                    int t=globalVariable.getTotal();
+                    globalVariable.setTotal(t+Integer.parseInt(textView_s.getText().toString()));                    Intent intent = new Intent(Game2.this,Game3.class);
                     startActivity(intent);
                     finish();
                 }
@@ -269,6 +271,10 @@ public class Game2 extends GlobalCode {
         imageView_a3.setVisibility(View.GONE);
         Toast toast =Toast.makeText(Game2.this,"恭喜，你答對了",Toast.LENGTH_SHORT);
         toast.show();
+        //score
+        int s = Integer.parseInt(textView_s.getText().toString());
+        textView_s.setText(""+(s+3));
+        //換題
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

@@ -3,6 +3,8 @@ package com.example.luodong_river;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -22,7 +25,7 @@ public class Game1 extends GlobalCode {
     View layout;
     TextView textView_score,textView_timer,textView_text;
     ImageView imageView_ch,imageView_d1,imageView_d2,imageView_d3,imageView_d4,imageView_d5,imageView_menu;
-    GlobalVariable globalVariable_mode;
+    GlobalVariable globalVariable;
     int i=0;
     int screenWidth=0;
     float screen_x=0;
@@ -47,8 +50,8 @@ public class Game1 extends GlobalCode {
 
         //開發者模式菜單
         imageView_menu=findViewById(R.id.imageView_menu);
-        globalVariable_mode= (GlobalVariable) getApplicationContext();
-        if(globalVariable_mode.getMode().equals("developer")){
+        globalVariable= (GlobalVariable) getApplicationContext();
+        if(globalVariable.getMode().equals("developer")){
             imageView_menu.setVisibility(View.VISIBLE);
         }else{
             imageView_menu.setVisibility(View.GONE);
@@ -56,6 +59,8 @@ public class Game1 extends GlobalCode {
         imageView_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int t=globalVariable.getTotal();
+                globalVariable.setTotal(t+Integer.parseInt(textView_score.getText().toString()));
                 Intent intent =new Intent(Game1.this,DeveloperMode.class);
                 startActivity(intent);
                 finish();
@@ -76,7 +81,7 @@ public class Game1 extends GlobalCode {
                 if(i==0){
                    i++;
                    layout.setBackgroundResource(R.drawable.game1b2);
-                   button_go.setBackgroundResource(R.drawable.button_nextpage);
+                   button_go.setBackgroundResource(R.drawable.button_start);
 
                 }else if(i==1){
                     i++;
@@ -84,22 +89,39 @@ public class Game1 extends GlobalCode {
                     layout.setBackgroundColor(getResources().getColor(R.color.white));
                     button_go.setVisibility(View.GONE);
 
-                    // 3sec預備倒數
-                    textView_text.setVisibility(View.VISIBLE);
-                    new CountDownTimer(4000, 1000) {
-                        public void onTick(long millisUntilFinished) {
-                            if((millisUntilFinished / 1000)==0){
-                                textView_text.setText("Start");
-                            }else{
-                                textView_text.setText(""+millisUntilFinished / 1000);
-                            }
+                    AlertDialog.Builder alertDialog =
+                            new AlertDialog.Builder(Game1.this);
+                    alertDialog.setTitle("玩法");
+                    alertDialog.setMessage("點擊螢幕右側人物將往右移\n點擊螢幕左側人物將往左移");
+                    alertDialog.setPositiveButton("我知道了", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // 3sec預備倒數
+                            textView_text.setVisibility(View.VISIBLE);
+                            new CountDownTimer(4000, 1000) {
+                                public void onTick(long millisUntilFinished) {
+                                    if((millisUntilFinished / 1000)==0){
+                                        textView_text.setText("Start");
+                                    }else{
+                                        textView_text.setText(""+millisUntilFinished / 1000);
+                                    }
+                                }
+                                public void onFinish() {
+                                    game();
+                                    textView_text.setVisibility(View.GONE);
+                                }
+                            }.start();
                         }
-                        public void onFinish() {
-                            game();
-                            textView_text.setVisibility(View.GONE);
-                        }
-                    }.start();
+                    });
+                    alertDialog.setCancelable(false);
+                    alertDialog.show();
+
+
                 }else{
+                    // TODO: 2022/5/7 pic
+                    button_go.setBackgroundResource(R.drawable.button_nextpage);
+                    int t=globalVariable.getTotal();
+                    globalVariable.setTotal(t+Integer.parseInt(textView_score.getText().toString()));
                     Intent intent = new Intent(Game1.this,Game2.class);
                     startActivity(intent);
                     finish();

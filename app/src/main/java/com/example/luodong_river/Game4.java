@@ -44,7 +44,7 @@ public class Game4 extends GlobalCode {
     TextView textView_text,textView_q,textView_score;
     ImageView imageView_q;
     ImageView imageView_menu;
-    GlobalVariable globalVariable_mode;
+    GlobalVariable globalVariable;
     int i=0;
 
     @Override
@@ -54,8 +54,8 @@ public class Game4 extends GlobalCode {
 
         //開發者模式菜單
         imageView_menu=findViewById(R.id.imageView_menu);
-        globalVariable_mode= (GlobalVariable) getApplicationContext();
-        if(globalVariable_mode.getMode().equals("developer")){
+        globalVariable= (GlobalVariable) getApplicationContext();
+        if(globalVariable.getMode().equals("developer")){
             imageView_menu.setVisibility(View.VISIBLE);
         }else{
             imageView_menu.setVisibility(View.GONE);
@@ -63,6 +63,8 @@ public class Game4 extends GlobalCode {
         imageView_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int t=globalVariable.getTotal();
+                globalVariable.setTotal(t+Integer.parseInt(textView_score.getText().toString()));
                 Intent intent =new Intent(Game4.this,DeveloperMode.class);
                 startActivity(intent);
                 finish();
@@ -95,7 +97,8 @@ public class Game4 extends GlobalCode {
                     game();
                     button_go.setVisibility(View.GONE);
                 }else{
-                    Intent intent = new Intent(Game4.this,Game5.class);
+                    int t=globalVariable.getTotal();
+                    globalVariable.setTotal(t+Integer.parseInt(textView_score.getText().toString()));                    Intent intent = new Intent(Game4.this,Game5.class);
                     startActivity(intent);
                     finish();
                 }

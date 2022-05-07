@@ -12,16 +12,17 @@ import android.widget.TextView;
 public class DeveloperMode extends GlobalCode {
 
     Button button_go;
-    GlobalVariable globalVariable_mode;
+    GlobalVariable globalVariable;
     TextView textView_d1,textView_d2,textView_d3,textView_d4,textView_d5,textView_d6,textView_d7;
+    TextView textView_score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_developer_mode);
 
-        globalVariable_mode= (GlobalVariable) getApplicationContext();
-        Log.d("mode_getApplication_D",globalVariable_mode.getMode());
+        globalVariable= (GlobalVariable) getApplicationContext();
+        Log.d("mode_getApplication_D",globalVariable.getMode());
 
         button_go=findViewById(R.id.button_Dgo);
         button_go.setOnClickListener(new View.OnClickListener() {
@@ -30,9 +31,12 @@ public class DeveloperMode extends GlobalCode {
                 Intent intent=new Intent(DeveloperMode.this,GameRules.class);
                 startActivity(intent);
                 finish();
-                Log.d("mode_button_rules_D",globalVariable_mode.getMode());
+                Log.d("mode_button_rules_D",globalVariable.getMode());
             }
         });
+
+        textView_score=findViewById(R.id.textView_Dscore);
+        textView_score.setText("累積分數: "+globalVariable.getTotal());
 
         textView_d1=findViewById(R.id.textView_d1);
         textView_d2=findViewById(R.id.textView_d2);
