@@ -211,7 +211,7 @@ public class Game6 extends GlobalCode {
                                    imageView_t.setImageResource(R.drawable.game6t2);
                                    s=1;
                                }
-                           },1500);
+                           },3000);
                        }
                        if(s==1){
                            imageView_t.setImageResource(View.INVISIBLE);
@@ -225,7 +225,7 @@ public class Game6 extends GlobalCode {
                                    toast.cancel();
                                    s=2;
                                }
-                           },1500);
+                           },3000);
                        }
                        if(s==3){
                            imageView_ch.setImageResource(R.drawable.game6ch5);
@@ -248,7 +248,7 @@ public class Game6 extends GlobalCode {
                                        }
                                    });
                                }
-                           },1500);
+                           },3000);
                            s=0;
                        }
                     }
